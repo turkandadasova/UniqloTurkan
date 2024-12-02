@@ -7,15 +7,14 @@ namespace UniqloMVC.DataAccess
     public class UniqloDbContext:DbContext
     {
         public DbSet<Slider> Sliders { get; set; }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=Uniqlo;Trusted_Connection=True;TrustServerSertificate=True");
-            base.OnConfiguring(optionsBuilder);
-        }
-
-        //public UniqloDbContext(DbContextOptions opt):base(opt)
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public UniqloDbContext(DbContextOptions opt) : base(opt) { }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
-
+        //    base.OnConfiguring(optionsBuilder);
         //}
+
+        
     }
 }

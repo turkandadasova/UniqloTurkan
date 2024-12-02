@@ -8329,6 +8329,70 @@
       "PackagePath": "staticwebassets\\assets\\style.css"
     },
     {
+      "Id": "C:\\Users\\Furqan Service\\source\\repos\\UniqloMVC\\UniqloMVC\\wwwroot\\imgs\\products\\5ecy4ji2.die.jpeg",
+      "PackagePath": "staticwebassets\\imgs\\products\\5ecy4ji2.die.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\Furqan Service\\source\\repos\\UniqloMVC\\UniqloMVC\\wwwroot\\imgs\\products\\iznwchlq.2i1.webp",
+      "PackagePath": "staticwebassets\\imgs\\products\\iznwchlq.2i1.webp"
+    },
+    {
+      "Id": "C:\\Users\\Furqan Service\\source\\repos\\UniqloMVC\\UniqloMVC\\wwwroot\\imgs\\products\\q11pecum.o35.jpg",
+      "PackagePath": "staticwebassets\\imgs\\products\\q11pecum.o35.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Furqan Service\\source\\repos\\UniqloMVC\\UniqloMVC\\wwwroot\\imgs\\products\\u0o3thpe.vwe.webp",
+      "PackagePath": "staticwebassets\\imgs\\products\\u0o3thpe.vwe.webp"
+    },
+    {
+      "Id": "C:\\Users\\Furqan Service\\source\\repos\\UniqloMVC\\UniqloMVC\\wwwroot\\imgs\\sliders\\b22fifjo.ps5.png",
+      "PackagePath": "staticwebassets\\imgs\\sliders\\b22fifjo.ps5.png"
+    },
+    {
+      "Id": "C:\\Users\\Furqan Service\\source\\repos\\UniqloMVC\\UniqloMVC\\wwwroot\\imgs\\sliders\\bfyalqa4.nkh.png",
+      "PackagePath": "staticwebassets\\imgs\\sliders\\bfyalqa4.nkh.png"
+    },
+    {
+      "Id": "C:\\Users\\Furqan Service\\source\\repos\\UniqloMVC\\UniqloMVC\\wwwroot\\imgs\\sliders\\eedkugpk.fzq.webp",
+      "PackagePath": "staticwebassets\\imgs\\sliders\\eedkugpk.fzq.webp"
+    },
+    {
+      "Id": "C:\\Users\\Furqan Service\\source\\repos\\UniqloMVC\\UniqloMVC\\wwwroot\\imgs\\sliders\\fdb3c0mv.xoh.png",
+      "PackagePath": "staticwebassets\\imgs\\sliders\\fdb3c0mv.xoh.png"
+    },
+    {
+      "Id": "C:\\Users\\Furqan Service\\source\\repos\\UniqloMVC\\UniqloMVC\\wwwroot\\imgs\\sliders\\kfwpa14k.1jn.png",
+      "PackagePath": "staticwebassets\\imgs\\sliders\\kfwpa14k.1jn.png"
+    },
+    {
+      "Id": "C:\\Users\\Furqan Service\\source\\repos\\UniqloMVC\\UniqloMVC\\wwwroot\\imgs\\sliders\\lkctfmea.1ru.png",
+      "PackagePath": "staticwebassets\\imgs\\sliders\\lkctfmea.1ru.png"
+    },
+    {
+      "Id": "C:\\Users\\Furqan Service\\source\\repos\\UniqloMVC\\UniqloMVC\\wwwroot\\imgs\\sliders\\magb10ov.b0b.png",
+      "PackagePath": "staticwebassets\\imgs\\sliders\\magb10ov.b0b.png"
+    },
+    {
+      "Id": "C:\\Users\\Furqan Service\\source\\repos\\UniqloMVC\\UniqloMVC\\wwwroot\\imgs\\sliders\\tmlp1dxi.5uj.png",
+      "PackagePath": "staticwebassets\\imgs\\sliders\\tmlp1dxi.5uj.png"
+    },
+    {
+      "Id": "C:\\Users\\Furqan Service\\source\\repos\\UniqloMVC\\UniqloMVC\\wwwroot\\imgs\\sliders\\vmq1ibci.dqf.png",
+      "PackagePath": "staticwebassets\\imgs\\sliders\\vmq1ibci.dqf.png"
+    },
+    {
+      "Id": "C:\\Users\\Furqan Service\\source\\repos\\UniqloMVC\\UniqloMVC\\wwwroot\\imgs\\sliders\\wlq5opuq.40d.png",
+      "PackagePath": "staticwebassets\\imgs\\sliders\\wlq5opuq.40d.png"
+    },
+    {
+      "Id": "C:\\Users\\Furqan Service\\source\\repos\\UniqloMVC\\UniqloMVC\\wwwroot\\imgs\\sliders\\ywr1ibli.yu2.webp",
+      "PackagePath": "staticwebassets\\imgs\\sliders\\ywr1ibli.yu2.webp"
+    },
+    {
+      "Id": "C:\\Users\\Furqan Service\\source\\repos\\UniqloMVC\\UniqloMVC\\wwwroot\\imgs\\sliders\\zpz0oqgr.lmn.png",
+      "PackagePath": "staticwebassets\\imgs\\sliders\\zpz0oqgr.lmn.png"
+    },
+    {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.UniqloMVC.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },
