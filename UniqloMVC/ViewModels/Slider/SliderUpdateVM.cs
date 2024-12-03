@@ -2,7 +2,7 @@
 
 namespace UniqloMVC.ViewModels.Slider
 {
-    public class SliderCreateVM
+    public class SliderUpdateVM
     {
         [MaxLength(32, ErrorMessage = "Title length must be less than 32"), Required(ErrorMessage = "Basliq yazmaq vacibdir!")]
         public string Title { get; set; } = null!;
@@ -14,7 +14,6 @@ namespace UniqloMVC.ViewModels.Slider
         public string Subtitle { get; set; } = null!;
 
         public string? Link { get; set; }
-        [Required(ErrorMessage ="File is required")]
-        public IFormFile File { get; set; } = null!;
+        public IFormFile? File { get; set; }
     }
 }

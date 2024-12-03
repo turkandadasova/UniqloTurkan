@@ -36,8 +36,16 @@
                 <a class="btn btn-danger" asp-action="Delete" asp-controller="Slider" asp-route-id="@item.Id">Delete</a>
             </td>
             <td>
-                    <a class="btn btn-warning" asp-action="Hide" asp-controller="Slider" asp-route-id="@item.Id">Hide</a>
-            </td>
+                            @if (!item.IsDeleted)
+                            {
+                                
+                                <a class="btn btn-secondary" asp-action="Hide" asp-controller="Slider" asp-route-id="@item.Id">Hide</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-warning" asp-action="Show" asp-controller="Slider" asp-route-id="@item.Id">Show</a>
+                            }
+                        </td>
 
         </tr>
       }

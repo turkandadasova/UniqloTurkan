@@ -1,17 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UniqloMVC.DataAccess;
+using UniqloMVC.Extensions;
 using UniqloMVC.Models;
 using UniqloMVC.ViewModels.Slider;
 
 namespace UniqloMVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class SliderController(UniqloDbContext _context,IWebHostEnvironment _env) : Controller
-    {       
+    public class SliderController(UniqloDbContext _context, IWebHostEnvironment _env) : Controller
+    {
         public async Task<IActionResult> Index()
         {
-          
             return View(await _context.Sliders.ToListAsync());
         }
 
@@ -20,34 +20,139 @@ namespace UniqloMVC.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public async Task< IActionResult> Create(SliderCreateVM vm)
+        public async Task<IActionResult> Create(SliderCreateVM vm)
         {
-            if(!vm.File.ContentType.StartsWith("image"))
-             ModelState.AddModelError("File", "File must be image!");
-            if(vm.File.Length>2*1024*1024)
-             ModelState.AddModelError("File", "File length must be less than 2mg");
+            if (vm.File != null)
+            {
+                if (!vm.File.IsValidType("image"))
+                    ModelState.AddModelError("File", "File must be image!");
+                if (!vm.File.IsValidSize(5 * 1024))
+                    ModelState.AddModelError("File", "File length must be less than 2mg");
+            }
+           
             if (!ModelState.IsValid) return View();
 
-            string newFileName=Path.GetRandomFileName()+Path.GetExtension(vm.File.FileName);
+            string newFileName = await vm.File.UploadAsync(_env.WebRootPath, "imgs", "sliders");
 
-            using (Stream stream = System.IO.File.Create(Path.Combine(_env.WebRootPath, "imgs", "sliders", newFileName)))
-            {
-                await vm.File.CopyToAsync(stream);
-            }
 
             Slider slider = new Slider
             {
-                ImageUrl=newFileName,
-                Title=vm.Title,
-                Subtitle=vm.Subtitle,
-                Link=vm.Link,
+                ImageUrl = newFileName,
+                Title = vm.Title,
+                Subtitle = vm.Subtitle,
+                Link = vm.Link,
             };
-            
+
             await _context.Sliders.AddAsync(slider);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-
-            return View();
         }
+
+        public async Task<IActionResult> Update(int? id)
+        {
+
+            if (!id.HasValue) return BadRequest();
+
+            var data = await _context.Sliders.FindAsync(id);
+
+            if(data is null) return NotFound();
+
+            SliderUpdateVM vm = new();
+
+            vm.Title = data.Title;
+            vm.Subtitle = data.Subtitle;
+            vm.Link = data.Link;
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(int? id,SliderUpdateVM vm)
+        {
+            if (!id.HasValue) return BadRequest();
+
+            var data = await _context.Sliders.FindAsync(id);
+
+            if (data is null) return NotFound();
+
+
+            if (vm.File != null)
+            {
+                if (!vm.File.IsValidType("image"))
+                    ModelState.AddModelError("File", "File must be image!");
+                if (!vm.File.IsValidSize(5 * 1024))
+                    ModelState.AddModelError("File", "File length must be less than 2mg");
+
+                string oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "imgs", "sliders", data.ImageUrl);
+
+                if (System.IO.File.Exists(oldFilePath))
+                {
+                    System.IO.File.Delete(oldFilePath);
+                }
+
+                string newFileName = await vm.File.UploadAsync(_env.WebRootPath, "imgs", "sliders");
+                data.ImageUrl = newFileName;
+            }
+
+            if (!ModelState.IsValid) return View(vm);
+
+            data.Title = vm.Title;
+            data.Subtitle = vm.Subtitle;
+            data.Link = vm.Link;
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if(!id.HasValue) return BadRequest();
+
+            var data = await _context.Sliders.FindAsync(id);
+
+            if (data is null) return NotFound();
+
+            string oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "imgs", "sliders", data.ImageUrl);
+
+            if (System.IO.File.Exists(oldFilePath))
+            {
+                System.IO.File.Delete(oldFilePath);
+            }
+
+            _context.Sliders.Remove(data);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Hide(int? id)
+        {
+            if (!id.HasValue) return BadRequest();
+
+            var data = await _context.Sliders.FindAsync(id);
+
+            if (data is null) return NotFound();
+
+            data.IsDeleted = true;
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Show(int? id)
+        {
+            if (!id.HasValue) return BadRequest();
+
+            var data = await _context.Sliders.FindAsync(id);
+
+            if (data is null) return NotFound();
+
+            data.IsDeleted = false;
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+        
     }
 }

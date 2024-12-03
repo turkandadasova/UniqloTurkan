@@ -5,7 +5,7 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Slider List</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Product List</h6>
         <a asp-action="Create"  class="btn btn-outline-primary ml-auto">Create</a>
     </div>
     <div class="card-body">
@@ -16,6 +16,7 @@
                     <th scope="col">Name</th>
                     <th scope="col">Image</th>
                     <th scope="col">Category</th>
+                    <th scope="col">Description</th>
                     <th scope="col">CostPrice</th>
                     <th scope="col">SellPrice</th>
                     <th scope="col">Discount</th>
@@ -32,6 +33,7 @@
                         <td>@item.Name</td>
                         <td><img src="~/imgs/products/@item.CoverImage" width="50" /></td>
                         <td>@item.Category?.Name</td>
+                        <td>@item.Description</td>
                         <td>@item.CostPrice</td>
                         <td>@item.SellPrice</td>
                         <td>@item.Discount</td>

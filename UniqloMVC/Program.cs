@@ -14,7 +14,6 @@ namespace UniqloMVC
             {
                 opt.UseSqlServer(builder.Configuration.GetConnectionString("MSSql"));
             });
-            //builder.Services.AddScoped<UniqloDbContext>();
             var app = builder.Build();
 
             app.MapControllerRoute(

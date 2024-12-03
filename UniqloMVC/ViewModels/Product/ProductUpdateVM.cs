@@ -3,7 +3,7 @@ using UniqloMVC.Models;
 
 namespace UniqloMVC.ViewModels.Product
 {
-    public class ProductCreateVM
+    public class ProductUpdateVM
     {
         [MaxLength(64)]
         public string Name { get; set; } = null!;
@@ -19,6 +19,6 @@ namespace UniqloMVC.ViewModels.Product
         [Range(0, 100)]
         public int Discount { get; set; }
         public int? CategoryId { get; set; }
-        //public Category? Category { get; set; }
+       // public Category? Category { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using UniqloMVC.DataAccess;
 using UniqloMVC.Extensions;
 using UniqloMVC.Models;
 using UniqloMVC.ViewModels.Product;
+using UniqloMVC.ViewModels.Slider;
 
 namespace UniqloMVC.Areas.Admin.Controllers
 {
@@ -17,7 +18,7 @@ namespace UniqloMVC.Areas.Admin.Controllers
 
         public async Task<IActionResult> Create()
         {
-            return View();
+            return View();  
         }
         [HttpPost]
         public async Task<IActionResult> Create(ProductCreateVM vm)
@@ -39,5 +40,92 @@ namespace UniqloMVC.Areas.Admin.Controllers
             await _context.SaveChangesAsync();
             return View();
         }
+
+        public async Task<IActionResult> Update(int? id)
+        {
+
+            if (!id.HasValue) return BadRequest();
+
+            var data = await _context.Products.FindAsync(id);
+
+            if (data is null) return NotFound();
+
+            ProductUpdateVM vm = new();
+
+            vm.Name = data.Name;
+            vm.Description = data.Description;
+            vm.CostPrice = data.CostPrice;
+            vm.SellPrice = data.SellPrice;
+            vm.Discount = data.Discount;
+            vm.Quantity = data.Quantity;
+       
+            
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(int? id, ProductUpdateVM vm)
+        {
+            if (!id.HasValue) return BadRequest();
+
+            var data = await _context.Products.FindAsync(id);
+
+            if (data is null) return NotFound();
+
+
+            /*if (vm.CoverFile != null)
+            {
+                if (!vm.CoverFile.IsValidType("image"))
+                    ModelState.AddModelError("File", "File must be image!");
+                if (!vm.CoverFile.IsValidSize(5 * 1024))
+                    ModelState.AddModelError("File", "File length must be less than 2mg");
+
+                string oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "imgs", "products", data.CoverImage);
+
+                if (System.IO.File.Exists(oldFilePath))
+                {
+                    System.IO.File.Delete(oldFilePath);
+                }
+
+                string newFileName = await vm.CoverFile.UploadAsync(_env.WebRootPath, "imgs", "products");
+                data.CoverImage = newFileName;}*/
+            
+
+            if (!ModelState.IsValid) return View(vm);
+
+            data.Name = vm.Name;
+            data.Description = vm.Description;
+            data.Discount = vm.Discount;
+            data.Quantity = vm.Quantity;
+            data.CostPrice = vm.CostPrice;
+            data.SellPrice = vm.SellPrice;
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (!id.HasValue) return BadRequest();
+
+            var data = await _context.Products.FindAsync(id);
+
+            if (data is null) return NotFound();
+
+            string oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "imgs", "products", data.CoverImage);
+
+            if (System.IO.File.Exists(oldFilePath))
+            {
+                System.IO.File.Delete(oldFilePath);
+            }
+
+            _context.Products.Remove(data);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }
