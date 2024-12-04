@@ -61,7 +61,7 @@ namespace UniqloMVC.Areas.Admin.Controllers
             vm.CategoryId = data.CategoryId;
             vm.CoverFileUrl = data.CoverImage;
 
-
+            //Turkan copy eleme bu setri yaz!!!
             ViewBag.Categories = await _context.Categories.Where(x => !x.IsDeleted).ToListAsync();
 
             return View(vm);
@@ -84,7 +84,7 @@ namespace UniqloMVC.Areas.Admin.Controllers
                 if (!vm.CoverFile.IsValidSize(5 * 1024))
                     ModelState.AddModelError("File", "File length must be less than 2mg");
 
-                string oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "imgs", "products", data.CoverImage);
+                string oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), _env.WebRootPath, "imgs", "products", data.CoverImage);
 
                 if (System.IO.File.Exists(oldFilePath))
                 {
