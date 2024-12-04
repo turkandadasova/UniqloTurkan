@@ -9,7 +9,7 @@ using UniqloMVC.ViewModels.Slider;
 namespace UniqloMVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class ProductController(IWebHostEnvironment _env,UniqloDbContext _context) : Controller
+    public class ProductController(IWebHostEnvironment _env, UniqloDbContext _context) : Controller
     {
         public async Task<IActionResult> Index()
         {
@@ -18,24 +18,24 @@ namespace UniqloMVC.Areas.Admin.Controllers
 
         public async Task<IActionResult> Create()
         {
-            return View();  
+            return View();
         }
         [HttpPost]
         public async Task<IActionResult> Create(ProductCreateVM vm)
         {
-            if(vm.CoverFile != null)
+            if (vm.CoverFile != null)
             {
-             if (!vm.CoverFile.IsValidType("image"))
-                ModelState.AddModelError("CoverFile", "File type must be an image");
-             if(!vm.CoverFile.IsValidSize(300))
+                if (!vm.CoverFile.IsValidType("image"))
+                    ModelState.AddModelError("CoverFile", "File type must be an image");
+                if (!vm.CoverFile.IsValidSize(300))
                     ModelState.AddModelError("CoverFile", "File type must be less than 300kb");
 
             }
 
             if (!ModelState.IsValid) return View();
             Product product = vm;
-            product.CoverImage=await vm.CoverFile!.UploadAsync(_env.WebRootPath,"imgs","products");
-           
+            product.CoverImage = await vm.CoverFile!.UploadAsync(_env.WebRootPath, "imgs", "products");
+
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
             return View();
@@ -58,8 +58,11 @@ namespace UniqloMVC.Areas.Admin.Controllers
             vm.SellPrice = data.SellPrice;
             vm.Discount = data.Discount;
             vm.Quantity = data.Quantity;
-       
-            
+            vm.CategoryId = data.CategoryId;
+            vm.CoverFileUrl = data.CoverImage;
+
+
+            ViewBag.Categories = await _context.Categories.Where(x => !x.IsDeleted).ToListAsync();
 
             return View(vm);
         }
@@ -74,7 +77,7 @@ namespace UniqloMVC.Areas.Admin.Controllers
             if (data is null) return NotFound();
 
 
-            /*if (vm.CoverFile != null)
+            if (vm.CoverFile != null)
             {
                 if (!vm.CoverFile.IsValidType("image"))
                     ModelState.AddModelError("File", "File must be image!");
@@ -89,10 +92,16 @@ namespace UniqloMVC.Areas.Admin.Controllers
                 }
 
                 string newFileName = await vm.CoverFile.UploadAsync(_env.WebRootPath, "imgs", "products");
-                data.CoverImage = newFileName;}*/
-            
+                data.CoverImage = newFileName;
+            }
 
-            if (!ModelState.IsValid) return View(vm);
+
+            if (!ModelState.IsValid)
+            {
+
+                ViewBag.Categories = await _context.Categories.Where(x => !x.IsDeleted).ToListAsync();
+                return View(vm);
+            }
 
             data.Name = vm.Name;
             data.Description = vm.Description;
@@ -100,6 +109,7 @@ namespace UniqloMVC.Areas.Admin.Controllers
             data.Quantity = vm.Quantity;
             data.CostPrice = vm.CostPrice;
             data.SellPrice = vm.SellPrice;
+            data.CategoryId = vm.CategoryId;
 
             await _context.SaveChangesAsync();
 

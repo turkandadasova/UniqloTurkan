@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ViewModels\ProductImage\" />
     <Folder Include="wwwroot\assets\images\about\" />
     <Folder Include="wwwroot\assets\images\payment\" />
     <Folder Include="wwwroot\imgs\sliders\" />

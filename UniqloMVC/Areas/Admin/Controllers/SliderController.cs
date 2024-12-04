@@ -153,6 +153,11 @@ namespace UniqloMVC.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-        
+
+        public async Task<IActionResult> Select()
+        {
+            return View(await _context.Sliders.ToListAsync());
+        }
+
     }
 }

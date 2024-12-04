@@ -97,5 +97,27 @@ namespace UniqloMVC.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (!id.HasValue) return BadRequest();
+
+            var data = await _context.Categories.FindAsync(id);
+
+            if (data is null) return NotFound();
+            
+
+            //string oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "imgs", "sliders", data.ImageUrl);
+
+            //if (System.IO.File.Exists(oldFilePath))
+            //{
+            //    System.IO.File.Delete(oldFilePath);
+            //}
+
+            _context.Categories.Remove(data);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }
