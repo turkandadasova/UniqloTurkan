@@ -18,9 +18,11 @@ namespace UniqloMVC.Models
         [DataType("decimal(18,2)")]
         public decimal SellPrice { get; set; }
         [Range(0, 100)]
+
         public int Discount { get; set; }
         public int? CategoryId { get; set; }
         public Category? Category { get; set; }
+        public ICollection<Tag> Tags { get; set; }  
 
         public static implicit operator Product(ProductCreateVM vm)
         {
@@ -39,3 +41,4 @@ namespace UniqloMVC.Models
         
     }
 }
+        

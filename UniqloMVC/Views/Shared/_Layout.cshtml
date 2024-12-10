@@ -71,8 +71,22 @@
                         <!-- End MAinmenu Ares -->
                         <div class="col-md-2 col-lg-2 col-6">
                             <ul class="menu-extra">
-                                <li><a href="login-register.html"><span class="ti-user"></span></a></li>
-                                <li class="cart__menu"><span class="ti-shopping-cart"></span></li>
+                                @if (Context.User.Identity?.IsAuthenticated == true)
+                                {
+                                    <li>
+                                        <a asp-controller="Account" asp-action="LogOut">
+                                            <span class="ti-arrow-circle-right"></span>
+                                        </a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <a asp-controller="Account" asp-action="Login">
+                                            <span class="ti-user"></span>
+                                        </a>
+                                    </li>
+                                }
                             </ul>
                         </div>
                     </div>
@@ -325,7 +339,7 @@
     <script src="~/assets/js/plugins.js"></script>
     <!-- Main js file that contents all jQuery plugins activation. -->
     <script src="~/assets/js/main.js"></script>
-
+    @await RenderSectionAsync("scripts",false)
 </body>
 
 </html>

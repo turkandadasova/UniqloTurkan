@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UniqloMVC.DataAccess;
 using UniqloMVC.Extensions;
+using UniqloMVC.Helpers;
 using UniqloMVC.Models;
 using UniqloMVC.ViewModels.Slider;
 
 namespace UniqloMVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = RoleConstants.Slider)]
     public class SliderController(UniqloDbContext _context, IWebHostEnvironment _env) : Controller
     {
         public async Task<IActionResult> Index()

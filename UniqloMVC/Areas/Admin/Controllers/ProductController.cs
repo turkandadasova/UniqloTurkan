@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UniqloMVC.DataAccess;
 using UniqloMVC.Extensions;
+using UniqloMVC.Helpers;
 using UniqloMVC.Models;
 using UniqloMVC.ViewModels.Product;
 using UniqloMVC.ViewModels.Slider;
@@ -9,6 +11,7 @@ using UniqloMVC.ViewModels.Slider;
 namespace UniqloMVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = RoleConstants.Product)]
     public class ProductController(IWebHostEnvironment _env, UniqloDbContext _context) : Controller
     {
         public async Task<IActionResult> Index()
@@ -38,7 +41,7 @@ namespace UniqloMVC.Areas.Admin.Controllers
 
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
-            return View();
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Update(int? id)

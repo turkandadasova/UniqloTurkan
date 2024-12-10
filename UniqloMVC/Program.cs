@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using UniqloMVC.DataAccess;
+using UniqloMVC.Extensions;
 using UniqloMVC.Models;
 
 namespace UniqloMVC
@@ -19,7 +20,8 @@ namespace UniqloMVC
 
             builder.Services.AddIdentity<User, IdentityRole>(opt =>
             {
-                opt.Password.RequiredLength = 3;
+                opt.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._";
+                opt.Password.RequiredLength = 8;
                 opt.Password.RequireNonAlphanumeric = false;
                 opt.Password.RequireDigit = false;
                 opt.Password.RequireLowercase = false;
@@ -28,10 +30,19 @@ namespace UniqloMVC
                 opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
             }).AddDefaultTokenProviders().AddEntityFrameworkStores<UniqloDbContext>();
 
+            builder.Services.ConfigureApplicationCookie(x =>
+            {
+                x.AccessDeniedPath = "/Home/AccessDenied";
+
+            });
+
             var app = builder.Build();
 
 
+
+            app.UseUserSeed();
             app.UseStaticFiles();
+
 
             app.MapControllerRoute(name: "register",
                 pattern: "register",
@@ -39,7 +50,7 @@ namespace UniqloMVC
 
             app.MapControllerRoute(
             name: "areas",
-            pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}" );
+            pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");

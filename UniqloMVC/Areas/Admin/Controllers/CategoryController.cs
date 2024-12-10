@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UniqloMVC.DataAccess;
 using UniqloMVC.Models;
@@ -9,6 +10,7 @@ using UniqloMVC.ViewModels.Slider;
 namespace UniqloMVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class CategoryController(UniqloDbContext _context, IWebHostEnvironment _env) : Controller
     {
        
